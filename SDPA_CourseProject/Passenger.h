@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 struct Passenger {
 	std::string passport_id = "NNNN-NNNNNN";
@@ -18,8 +19,10 @@ struct ListOfPassengers {
 };
 
 void AddListOfPassengers(ListOfPassengers** head ,Passenger elem);
+void ShowListOfPassengers(ListOfPassengers* head);
 int HashFunc(std::string key);
 void AddHash(ListOfPassengers* arr[], Passenger elem);
+void FreeListOfPassengers(ListOfPassengers** head);
 bool IsIdUnique(ListOfPassengers* arr[], std::string id);
 
 #endif 

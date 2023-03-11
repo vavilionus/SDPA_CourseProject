@@ -7,6 +7,7 @@
 #include "Passenger.h"
 #include "Interface.h"
 
+//1
 void CreatePassenger(ListOfPassengers* arr[]) {
     Passenger elem;
     std::string passport_id = "NNNN-NNNNNN";
@@ -26,6 +27,28 @@ void CreatePassenger(ListOfPassengers* arr[]) {
     std::cout << "Input date of birth :" << std::endl << "\t";
     elem.date_of_birth = DateInput();
     AddHash(arr, elem);
+}
+
+
+//3
+void ShowAllPassenger(ListOfPassengers* arr[]) {
+    int operathion_choose;
+    //std::cout << "/-----------------------------------------------------------------------------------------------------------------\\" << std::endl;
+    //std::cout << "|  passport Id  |            Full Name           |            Authority           | Date of issue | Date of issue |" << std::endl;
+    //std::cout << "|---------------|--------------------------------|--------------------------------|---------------|---------------|" << std::endl;
+    /*std::cout << "\nPlease choose operathion:\n    1. Show ALL info\n    2. Show only paasport ID, fullname and isue date\n" << std::endl;
+    std::cin >> operathion_choose;
+    reader(&operathion_choose, 1, 2);*/
+    //возможно стоит добавить ропцию вывода всех рейсов вместе с инфой о паспорте?
+    std::cout << "/-----------------------------------------------------------------------------------------------------------------\\" << std::endl;
+    std::cout << "|  passport Id  |            Full Name           |            Authority           | Date of issue | Date of birth |" << std::endl;
+    std::cout << "|---------------|--------------------------------|--------------------------------|---------------|---------------|" << std::endl;
+    for (int i = 0; i < 100; i++) {
+        if (arr[i]) {
+            ShowListOfPassengers(arr[i]);
+        }
+    }
+
 }
 
 std::string PassportIdInput() {
@@ -264,3 +287,15 @@ std::string DateInput() {
 
 }
 
+// cheak int input
+void reader(int* a, int horiz_low = -2147483648, int horiz_high = 2147483647) {
+    while (std::cin.fail() || (std::cin.get() != '\n') || *a < horiz_low || *a > horiz_high) {
+        std::cin.clear();
+        //std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
+        std::cin.ignore(std::cin.rdbuf()->in_avail());
+        std::cout << "\nIncorrect data(" << horiz_low << ";" << horiz_high << ")\n";
+        std::cout << " Please input new one: ";
+        std::cin >> *a;
+        std::cout <<std::endl;
+    }
+}
