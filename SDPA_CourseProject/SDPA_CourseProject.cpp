@@ -2,15 +2,17 @@
 #include <iostream>
 #include "Passenger.h"
 #include "Interface.h"
+#include "Flight.h"
 
 int main()
 {
     int operathion_choice;
     ListOfPassengers* hash_table[100];
+    Tree* flight_tree = NULL;
     for (int i = 0; i < 100; i++) {
         hash_table[i] = NULL;
     }
-
+    /*
     while (true) {
         std::cout << "\nPlease choose operathion:\n    1. New passenger registration\n    2. Delete passenger info\n    3. Show all passengers passport info\n    4. Clear ALL passangers data\n    0. Escape program\n    (Warning! all unsaved information will Disappear)\n\nIN: ";
         std::cin >> operathion_choice;
@@ -67,15 +69,23 @@ int main()
 
 
     }
+    */
 
 
 
+    /*
+    Flight a, b, c;
+    a.flight_id = "AAB-000";
+    b.flight_id = "AAA-001";
+    c.flight_id = "AAA-002";
+    flight_tree = AddTreeElem(flight_tree, a);
+    flight_tree = AddTreeElem(flight_tree, b);
+    if (!(FindTreeBool(flight_tree, c))) {
+        flight_tree = AddTreeElem(flight_tree, c);
+    }
+    ShowTree(flight_tree);
+    */
 
-
-    Passenger a;
-    a.full_name = "GOD";
-    a.passport_id = "1111-111111";
-    
     //std::string tst = DateInput();
     
     //std::cout << HowManyDays(3, 2023) << std::endl;
@@ -83,10 +93,8 @@ int main()
     //AddHash(hash_table, a);
     //std::cout << IsIdUnique(hash_table, "1111-111111") << std::endl;
 
-    CreatePassenger(hash_table);
-    CreatePassenger(hash_table);
-    a.date_of_birth = DateInput();
-    
 
+    
+    return 0;
 }
 
