@@ -17,7 +17,7 @@ int main()
     while (true) {
         std::cout << "\nPlease choose operathion:\n    1. New passenger registration\n    2. Delete passenger info\n    3. Show passengers  info\n    4. Clear ALL passangers data\n    5. Add new Flight\n    6. Delete Flight\n    7. Show Flight info\n    8. Clear ALL Flights\n    9. Buy ticket\n    10. Return ticket\n    0. Escape program\n    (Warning! all unsaved information will Disappear)\n\nIN: ";
         std::cin >> operathion_choice;
-        reader(&operathion_choice, 0, 3);
+        reader(&operathion_choice, 0, 10);
 
         switch (operathion_choice) {
         case 0:
@@ -50,7 +50,8 @@ int main()
             break;
 
         case 5:
-            
+            CreateFlight(flight_tree);
+            ShowTree(flight_tree);
             break;
 
         case 6:

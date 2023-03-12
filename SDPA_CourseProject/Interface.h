@@ -19,9 +19,10 @@ void CreatePassenger(ListOfPassengers* arr[]);
 void ShowAllPassenger(ListOfPassengers* arr[]);
 
 //5. Add new Flightd
-void CreateFlight(Tree* flight_tree);
+void CreateFlight(Tree*& flight_tree);
 
 std::string PassportIdInput();
+std::string FlightIdInput();
 std::string NameInput();
 int HowManyDays(int x, int y);
 std::string DateInput();

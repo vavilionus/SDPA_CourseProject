@@ -54,8 +54,15 @@ void ShowAllPassenger(ListOfPassengers* arr[]) {
 }
 
 //5. Add new Flightd
-void CreateFlight(Tree* flight_tree) {
-
+void CreateFlight(Tree*& flight_tree) {
+    Flight elem;
+    std::cout << "Input flight ID:" << std::endl << "\t";
+    elem.flight_id = FlightIdInput();
+    if (FindTreeBool(flight_tree, elem)) {
+        std::cout << "This Flight ID is alredy in the system!" << std::endl;
+        return;
+    }
+    flight_tree = AddTreeElem(flight_tree, elem);
 }
 
 std::string PassportIdInput() {
@@ -130,6 +137,98 @@ std::string PassportIdInput() {
     }
     return a;
 
+}
+
+std::string FlightIdInput() {
+    std::string a;
+    int size;
+    bool flag_mistake = 0;
+    std::cin.clear();
+    std::cin.ignore(std::cin.rdbuf()->in_avail());
+    getline(std::cin, a, '\n');
+    size = a.size();
+    if (size) {
+        while (size != 0 && a[0] == ' ' || (a[0] == '\t')) {
+            a.erase(0, 1);
+            --size;
+        }
+        while (size != 0 && a[size - 1] == ' ' || (a[0] == '\t')) {
+            a.erase(--size, 1);
+        }
+    }
+
+    if (a.size() == 7 && a[3] == '-') {
+        for (int i = 0; i < 3; i++) {
+            if ((!(a[i] >= 'A' && a[i] <= 'Z')) && (!(a[i] >= 'a' && a[i] <= 'z'))) {
+                flag_mistake = 1;
+                break;
+            }
+
+        }
+        
+        for (int i = 4; i < 7; i++){
+            if (!((a[i] >= '0') && (a[i] <= '9'))) {
+                flag_mistake = 1;
+                break;
+            }
+        }
+    }
+    else {
+        flag_mistake = 1;
+    }
+
+    while (std::cin.fail() || flag_mistake) {
+        flag_mistake = 0;
+        std::cin.clear();
+        std::cin.ignore(std::cin.rdbuf()->in_avail());
+        std::cout << "\nIncorrect data!\nPlease input a new one. Passport number FORMAT: AAA-NNN\n\nIN: ";
+        getline(std::cin, a, '\n');
+        size = (a).size();
+        if (size) {
+            while (size != 0 && (a)[0] == ' ' || (a[0] == '\t')) {
+                (a).erase(0, 1);
+                --size;
+            }
+            while (size != 0 && (a)[size - 1] == ' ' || (a[0] == '\t')) {
+                (a).erase(--size, 1);
+            }
+        }
+
+        if (a.size() == 7 && a[3] == '-') {
+            for (int i = 0; i < 3; i++) {
+                if ((!(a[i] >= 'A' && a[i] <= 'Z')) && (!(a[i] >= 'a' && a[i] <= 'z'))) {
+                    flag_mistake = 1;
+                    break;
+                }
+
+            }
+
+            for (int i = 4; i < 7; i++) {
+                if (!((a[i] >= '0') && (a[i] <= '9'))) {
+                    flag_mistake = 1;
+                    break;
+                }
+            }
+        }
+        else {
+            flag_mistake = 1;
+        }
+    }
+
+    size = (a).size();
+    for (int i = 1; i < size; i++) {
+        if ((a)[i - 1] == ' ' && (a)[i] == ' ') {
+            (a).erase(--i, 1);
+
+            size--;
+        }
+    }
+    for (int i = 0; i < 3; i++) {
+        a[i] = toupper(a[i]);
+
+    }
+
+    return a;
 }
 
 std::string NameInput() {
