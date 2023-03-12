@@ -6,6 +6,8 @@
 #include <windows.h>
 #include "Passenger.h"
 #include "Interface.h"
+#include "Flight.h"
+#include "PlaneTicket.h"
 
 //1
 void CreatePassenger(ListOfPassengers* arr[]) {
@@ -48,6 +50,11 @@ void ShowAllPassenger(ListOfPassengers* arr[]) {
             ShowListOfPassengers(arr[i]);
         }
     }
+
+}
+
+//5. Add new Flightd
+void CreateFlight(Tree* flight_tree) {
 
 }
 
@@ -150,10 +157,10 @@ std::string NameInput() {
         }
     }
 
-    while (std::cin.fail() || a.size() < 2 || a.size() > 30) {
+    while (std::cin.fail() || a.size() < 2 || a.size() > 30 || (a.find_first_of("0123456789,!@#$%^&*()_+-=./|{}[]") <= 30)) {
         std::cin.clear();
         std::cin.ignore(std::cin.rdbuf()->in_avail());
-        std::cout << "\nIncorrect data!\nPlease input a new one.(2 <= length <= 30)\n\nIN: ";
+        std::cout << "\nIncorrect data!\nPlease input a new one.(2 <= length <= 30, and no numbers or spec symbols)\n\nIN: ";
         getline(std::cin, a, '\n');
         size = (a).size();
         if (size) {

@@ -21,6 +21,42 @@ void AddListOfPassengers (ListOfPassengers** head, Passenger elem) {
 	}
 }
 
+void DeleteListOfPassengers(ListOfPassengers** head, std::string delete_id) {
+	ListOfPassengers* cur = *head;
+	ListOfPassengers* holder;
+	if (!(*head)) {
+		std::cout << "There is nothing to delete." << std::endl;
+		return;
+	}
+	else if ((*head)->value.passport_id == delete_id) {
+		holder = (*head);
+		(*head) = (*head)->next;
+		delete holder;
+		std::cout << "element with id: " << delete_id << " - is deleted, and all data related to it.";
+		return;
+	}
+	else {
+		while (cur->next->next) {
+			if (cur->next->value.passport_id == delete_id) {
+				holder = cur->next;
+				cur->next = cur->next->next;
+				delete holder;
+				std::cout << "element with id: " << delete_id << " - is deleted, and all data related to it.";
+				return;
+			}
+			cur = cur->next;
+		}
+		if (cur->next->value.passport_id == delete_id) {
+			holder = cur->next;
+			cur->next = NULL;
+			std::cout << "element with id: " << delete_id << " - is deleted, and all data related to it.";
+			delete holder;
+			return;
+		}
+	}
+	std::cout << "element with id: " << delete_id << " isn't found";
+}
+
 void ShowListOfPassengers(ListOfPassengers* head) {
 	ListOfPassengers* cur = head;
 	if (!(head)) {

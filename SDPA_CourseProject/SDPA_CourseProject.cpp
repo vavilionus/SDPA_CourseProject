@@ -3,18 +3,19 @@
 #include "Passenger.h"
 #include "Interface.h"
 #include "Flight.h"
+#include "PlaneTicket.h"
 
 int main()
 {
     int operathion_choice;
     ListOfPassengers* hash_table[100];
     Tree* flight_tree = NULL;
+    ListOfPlaneTickets* plane_ticket_list = NULL;
     for (int i = 0; i < 100; i++) {
         hash_table[i] = NULL;
     }
-    /*
     while (true) {
-        std::cout << "\nPlease choose operathion:\n    1. New passenger registration\n    2. Delete passenger info\n    3. Show all passengers passport info\n    4. Clear ALL passangers data\n    0. Escape program\n    (Warning! all unsaved information will Disappear)\n\nIN: ";
+        std::cout << "\nPlease choose operathion:\n    1. New passenger registration\n    2. Delete passenger info\n    3. Show passengers  info\n    4. Clear ALL passangers data\n    5. Add new Flight\n    6. Delete Flight\n    7. Show Flight info\n    8. Clear ALL Flights\n    9. Buy ticket\n    10. Return ticket\n    0. Escape program\n    (Warning! all unsaved information will Disappear)\n\nIN: ";
         std::cin >> operathion_choice;
         reader(&operathion_choice, 0, 3);
 
@@ -69,7 +70,7 @@ int main()
 
 
     }
-    */
+    
 
 
 
@@ -93,7 +94,23 @@ int main()
     //AddHash(hash_table, a);
     //std::cout << IsIdUnique(hash_table, "1111-111111") << std::endl;
 
-
+    //проверка списка
+    PlaneTicket a;
+    a.ticket_id = "000000012";
+    AddListOfPlaneTickets(plane_ticket_list, a);
+    a.ticket_id = "000000001";
+    AddListOfPlaneTickets(plane_ticket_list, a);
+    a.ticket_id = "000000007";
+    AddListOfPlaneTickets(plane_ticket_list, a);
+    a.ticket_id = "000000005";
+    AddListOfPlaneTickets(plane_ticket_list, a);
+    a.ticket_id = "000000002";
+    AddListOfPlaneTickets(plane_ticket_list, a);
+    ShowListOfPlaneTickets(plane_ticket_list);
+    std::cout << "---------------------\n";
+    ListQuickSort(plane_ticket_list);
+    ShowListOfPlaneTickets(plane_ticket_list);
+    
     
     return 0;
 }
