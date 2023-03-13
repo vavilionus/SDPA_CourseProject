@@ -1,4 +1,12 @@
-﻿
+﻿#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#ifdef _DEBUG
+#ifndef DBG_NEW
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#define newDBG_NEW
+#endif
+#endif
 #include <iostream>
 #include "Passenger.h"
 #include "Interface.h"
@@ -7,6 +15,7 @@
 
 int main()
 {
+    
     int operathion_choice;
     ListOfPassengers* hash_table[100];
     Tree* flight_tree = NULL;
@@ -14,6 +23,10 @@ int main()
     for (int i = 0; i < 100; i++) {
         hash_table[i] = NULL;
     }
+
+    load(hash_table, flight_tree, plane_ticket_list, "load.txt");
+    ListQuickSort(plane_ticket_list);
+    loadProceeder(flight_tree, plane_ticket_list);
     while (true) {
         std::cout << "\nPlease choose operathion:\n    1. New passenger registration\n    2. Delete passenger info\n    3. Show passengers  info\n    4. Clear ALL passangers data\n    5. Add new Flight\n    6. Delete Flight\n    7. Show Flight info\n    8. Clear ALL Flights\n    9. Buy ticket\n    10. Return ticket\n    0. Escape program\n    (Warning! all unsaved information will Disappear)\n\nIN: ";
         std::cin >> operathion_choice;
@@ -23,6 +36,7 @@ int main()
         case 0:
             //тут нужна очистка всех структур
             //free_Price(&list);
+
             return 0;
             _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
             _CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDOUT);
@@ -41,6 +55,7 @@ int main()
             break;
 
         case 3:
+
             ShowAllPassenger(hash_table);
             
             break;
@@ -51,7 +66,7 @@ int main()
 
         case 5:
             CreateFlight(flight_tree);
-            ShowTree(flight_tree);
+            
             break;
 
         case 6:
@@ -59,13 +74,24 @@ int main()
             break;
 
         case 7:
-            
+            std::cout << "/---------|--------------------------------|--------------------------------|--------------------------------|------------|-------|-----|-----\\" << std::endl;
+            std::cout << "|    ID   |             Company            |            Deparure            |             Arrival            |  Dep.Date  | DTime |seats|sfree|" << std::endl;
+            std::cout << "|---------|--------------------------------|--------------------------------|--------------------------------|------------|-------|-----|-----|" << std::endl;
+
+            SymmericalShowTree(flight_tree);
             break;
 
         case 8:
             
             break;
 
+        case 9:
+            BuyTicket(hash_table, flight_tree, plane_ticket_list);
+            ShowListOfPlaneTickets(plane_ticket_list);
+            break;
+        case 10:
+
+            break;
         }
 
 
@@ -114,5 +140,12 @@ int main()
     
     
     return 0;
+    _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
+    _CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDOUT);
+    _CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_FILE);
+    _CrtSetReportFile(_CRT_ERROR, _CRTDBG_FILE_STDOUT);
+    _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
+    _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDOUT);
+    _CrtDumpMemoryLeaks();
 }
 

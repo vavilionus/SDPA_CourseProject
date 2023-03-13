@@ -73,7 +73,7 @@ void ShowListOfPassengers(ListOfPassengers* head) {
 			std::cout << "|---------------|--------------------------------|--------------------------------|---------------|---------------|" << std::endl;
 			cur = cur->next;
 		}
-		std::cout << std::endl;
+		
 	}
 }
 

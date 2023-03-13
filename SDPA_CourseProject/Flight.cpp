@@ -139,6 +139,40 @@ bool FindTreeBool(struct Tree*& Root, Flight value) {
     return 0;
 }
 
+void FreeSeatsDeacreseTree(struct Tree*& Root, std::string flight_id) {
+    Tree* cur = Root;
+    if (!(cur)) {
+        return ;
+    }
+    while (cur) {
+        if (cur->value.flight_id == flight_id) {
+            cur->value.free_seat_amount--;
+            return ;
+        }
+        if (flight_id > cur->value.flight_id) {
+            cur = cur->right;
+        }
+        else {
+
+            cur = cur->left;
+        }
+    }
+    return ;
+}
+
+void SymmericalShowTree(Tree* p) {
+    if (!p) return;
+
+    SymmericalShowTree(p->left);
+    std::cout << "| " << std::setw(7) << p->value.flight_id << " | " << std::setw(30) << p->value.company_name << " | "
+        << std::setw(30) << p->value.departure_name << " | " << std::setw(30) << p->value.arrival_name << " | " 
+        << std::setw(10) << p->value.date_of_departure << " | "
+        << std::setw(5) << p->value.time_of_departure << " | " << std::setw(3) << p->value.seat_amount << " | "
+        << std::setw(3) << p->value.free_seat_amount << " | " << std::endl;
+    std::cout << "|---------|--------------------------------|--------------------------------|--------------------------------|------------|-------|-----|-----|" << std::endl;
+
+}
+
 //dev func
 void ShowTree(Tree* p, int indent)
 {
