@@ -41,7 +41,9 @@ Tree* balance(Tree* p);
 Tree* AddTreeElem(Tree* Root, Flight n);
 Tree* DeleteTreeElem(struct Tree*& Root, Flight value);
 bool FindTreeBool(struct Tree*& Root, Flight value);
+bool isFreeSeatsTreeBool(struct Tree*& Root, Flight value);
 void FreeSeatsDeacreseTree(struct Tree*& Root, std::string flight_id);
+void FreeSeatsIncreaseTree(struct Tree*& Root, std::string flight_id);
 void SymmericalShowTree(Tree* p);
 //dev
 void ShowTree(Tree* p, int indent = 0);

@@ -18,6 +18,7 @@ struct ListOfPlaneTickets {
 };
 
 void AddListOfPlaneTickets(ListOfPlaneTickets*& head, PlaneTicket elem);
+bool DeleteListOfPlaneTickets(ListOfPlaneTickets*& head, std::string ticket_id);
 void ShowListOfPlaneTickets(ListOfPlaneTickets* head);
 
 void ConvertIn(ListOfPlaneTickets*& root);

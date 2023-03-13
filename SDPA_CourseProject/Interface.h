@@ -25,12 +25,16 @@ void CreateFlight(Tree*& flight_tree);
 //9. Buy ticket
 void BuyTicket(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list);
 
+//10. Return ticket
+void ReturnTicket(Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list);
+
 std::string PassportIdInput();
 std::string FlightIdInput();
 std::string NameInput();
 int HowManyDays(int x, int y);
 std::string DateInput();
 std::string TimeInput();
+std::string PlaneTicketIdInput();
 void reader(int* a, int horiz_low, int horiz_high);
 
 //devtools

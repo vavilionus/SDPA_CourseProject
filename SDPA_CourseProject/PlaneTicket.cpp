@@ -20,6 +20,43 @@ void AddListOfPlaneTickets(ListOfPlaneTickets*& head, PlaneTicket elem) {
 		p->next = head;
 	}
 }
+bool DeleteListOfPlaneTickets(ListOfPlaneTickets*& head, std::string ticket_id) {
+	ListOfPlaneTickets* cur = head;
+	ListOfPlaneTickets* holder;
+
+	if (cur == NULL) {
+		return 0;
+	}
+	if (head->value.ticket_id == ticket_id) {
+		while (cur->next != head) {
+			cur = cur->next;
+		}
+		holder = cur->next;
+		cur->next = cur->next->next;
+		head = cur->next;
+		
+		delete holder;
+		return  1;
+	}
+	else {
+		while (cur->next->next != head) {
+			if (cur->next->value.ticket_id == ticket_id) {
+				holder = cur->next;
+				cur->next = cur->next->next;
+				delete holder;
+				return 1;
+			}
+			cur = cur->next;
+		}
+		if (cur->next->value.ticket_id == ticket_id) {
+			holder = cur->next;
+			cur->next = cur->next->next;
+			delete holder;
+			return 1;
+		}
+	}
+	return 0;
+}
 
 void ShowListOfPlaneTickets(ListOfPlaneTickets* head) {
 	ListOfPlaneTickets* cur = head;

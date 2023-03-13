@@ -63,7 +63,7 @@ void CreateFlight(Tree*& flight_tree) {
     std::cout << "Input flight ID (AAA-NNN):" << std::endl << "\t";
     elem.flight_id = FlightIdInput();
     if (FindTreeBool(flight_tree, elem)) {
-        std::cout << "This Flight ID is alredy in the system!" << std::endl;
+        std::cout << "\nThis Flight ID is alredy in the system!\n" << std::endl;
         return;
     }
     std::cout << "Input flight company name:" << std::endl << "\t";
@@ -79,7 +79,7 @@ void CreateFlight(Tree*& flight_tree) {
     std::transform(arrival_name.begin(), arrival_name.end(), arrival_name.begin(),
         [](unsigned char c) { return std::tolower(c); });
     if ((departure_name) == (arrival_name)) {
-        std::cout << "Departure and arrival cannot be the same!" << std::endl;
+        std::cout << "\nDeparture and arrival cannot be the same!\n" << std::endl;
         return;
     }
     std::cout << "Input date of deaprture (NN.NN.NNNN):" << std::endl << "\t";
@@ -108,7 +108,7 @@ void BuyTicket(ListOfPassengers* arr[] ,Tree*& flight_tree, ListOfPlaneTickets*&
     int counter = 0;
 
     if (!(flight_tree)) {
-        std::cout << "There is no flights in the system!" << std::endl;
+        std::cout << "\nThere is no flights in the system!\n" << std::endl;
         return;
     }
 
@@ -123,7 +123,11 @@ void BuyTicket(ListOfPassengers* arr[] ,Tree*& flight_tree, ListOfPlaneTickets*&
     flight_id = FlightIdInput();
     holder.flight_id = flight_id;
     if (!FindTreeBool(flight_tree, holder)) {
-        std::cout << "This Flight ID isn't present in the system!" << std::endl;
+        std::cout << "\nThis Flight ID isn't present in the system!\n" << std::endl;
+        return;
+    }
+    if (!isFreeSeatsTreeBool(flight_tree, holder)) {
+        std::cout << "\nThis Flight has no more free seats!\n" << std::endl;
         return;
     }
     elem.flight_id = flight_id;
@@ -153,6 +157,44 @@ void BuyTicket(ListOfPassengers* arr[] ,Tree*& flight_tree, ListOfPlaneTickets*&
     AddListOfPlaneTickets(plane_tickets_list, elem);
     ListQuickSort(plane_tickets_list);
     FreeSeatsDeacreseTree(flight_tree, flight_id);
+}
+
+//10. Return ticket
+void ReturnTicket(Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list) {
+    std::string ticket_id, flight_id;
+    ListOfPlaneTickets* cur = plane_tickets_list;
+    if (!(flight_tree)) {
+        std::cout << "\nThere is no flights in the system!\n" << std::endl;
+        return;
+    }
+    if (!(plane_tickets_list)) {
+        std::cout << "\nThere is no plane tickets in the system!\n" << std::endl;
+        return;
+    }
+    std::cout << "Input Plane ticket ID (NNNNNNNNN):" << std::endl << "\t";
+    ticket_id = PlaneTicketIdInput();
+    if (plane_tickets_list->value.ticket_id == ticket_id) {
+        flight_id = plane_tickets_list->value.flight_id;
+    }
+    else {
+        cur = cur->next;
+        while (cur != plane_tickets_list) {
+            if (cur->value.ticket_id == ticket_id) {
+                flight_id = cur->value.flight_id;
+                break;
+            }
+            cur = cur->next;
+        }
+    }
+    if (DeleteListOfPlaneTickets(plane_tickets_list, ticket_id)) {
+        std::cout << "\nDeleted successfully.\n" << std::endl;
+        FreeSeatsIncreaseTree(flight_tree, flight_id);
+    }
+    else {
+        std::cout << "\nDeleted UNsuccessfully!\n" << std::endl;
+    }
+    
+
 }
 
 std::string PassportIdInput() {
@@ -575,6 +617,78 @@ std::string TimeInput() {
 
 }
 
+std::string PlaneTicketIdInput() {
+    std::string a;
+    int size;
+    bool flag_mistake = 0;
+    std::cin.clear();
+    std::cin.ignore(std::cin.rdbuf()->in_avail());
+    getline(std::cin, a, '\n');
+    size = a.size();
+    if (size) {
+        while (size != 0 && a[0] == ' ' || (a[0] == '\t')) {
+            a.erase(0, 1);
+            --size;
+        }
+        while (size != 0 && a[size - 1] == ' ' || (a[0] == '\t')) {
+            a.erase(--size, 1);
+        }
+    }
+
+    if (a.size() == 9) {
+        for (int i = 0; i < 9; i++) {
+            if (!((a[i] >= '0') && (a[i] <= '9'))) {
+                flag_mistake = 1;
+                break;
+            }
+        }
+    }
+    else {
+        flag_mistake = 1;
+    }
+
+    while (std::cin.fail() || flag_mistake) {
+        flag_mistake = 0;
+        std::cin.clear();
+        std::cin.ignore(std::cin.rdbuf()->in_avail());
+        std::cout << "\nIncorrect data!\nPlease input a new one. Passport number FORMAT: NNNNNNNNN\n\nIN: ";
+        getline(std::cin, a, '\n');
+        size = (a).size();
+        if (size) {
+            while (size != 0 && (a)[0] == ' ' || (a[0] == '\t')) {
+                (a).erase(0, 1);
+                --size;
+            }
+            while (size != 0 && (a)[size - 1] == ' ' || (a[0] == '\t')) {
+                (a).erase(--size, 1);
+            }
+        }
+
+        if (a.size() == 9) {
+            for (int i = 0; i < 9; i++) {
+                if (!((a[i] >= '0') && (a[i] <= '9'))) {
+                    flag_mistake = 1;
+                    break;
+                }
+            }
+        }
+        else {
+            flag_mistake = 1;
+        }
+    }
+
+    size = (a).size();
+    for (int i = 1; i < size; i++) {
+        if ((a)[i - 1] == ' ' && (a)[i] == ' ') {
+            (a).erase(--i, 1);
+
+            size--;
+        }
+    }
+    return a;
+
+}
+
 // cheak int input
 void reader(int* a, int horiz_low = -2147483648, int horiz_high = 2147483647) {
     while (std::cin.fail() || (std::cin.get() != '\n') || *a < horiz_low || *a > horiz_high) {
@@ -682,15 +796,25 @@ bool load(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTickets*& plan
 
 void loadProceeder(Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list) {
     ListOfPlaneTickets* cur = plane_tickets_list;
+    Flight holder;
     if (!(plane_tickets_list)) {
         return;
     }
     while (cur->next != plane_tickets_list) {
-        FreeSeatsDeacreseTree(flight_tree, cur->value.flight_id); 
+        holder.flight_id = cur->value.flight_id;
+        if (isFreeSeatsTreeBool(flight_tree, holder)) {
+            
+            FreeSeatsDeacreseTree(flight_tree, cur->value.flight_id);
+        }
+        
         cur = cur->next;
         
     }
-    FreeSeatsDeacreseTree(flight_tree, cur->value.flight_id);
+    if (isFreeSeatsTreeBool(flight_tree, holder)) {
+
+        FreeSeatsDeacreseTree(flight_tree, cur->value.flight_id);
+    }
+    
     //last
     return;
 }

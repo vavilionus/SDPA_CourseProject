@@ -139,6 +139,31 @@ bool FindTreeBool(struct Tree*& Root, Flight value) {
     return 0;
 }
 
+bool isFreeSeatsTreeBool(struct Tree*& Root, Flight value) {
+    Tree* cur = Root;
+    if (!(cur)) {
+        return 0;
+    }
+    while (cur) {
+        if (cur->value.flight_id == value.flight_id) {
+            if (cur->value.free_seat_amount != 0) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        }
+        if (value.flight_id > cur->value.flight_id) {
+            cur = cur->right;
+        }
+        else {
+
+            cur = cur->left;
+        }
+    }
+    return 0;
+}
+
 void FreeSeatsDeacreseTree(struct Tree*& Root, std::string flight_id) {
     Tree* cur = Root;
     if (!(cur)) {
@@ -158,6 +183,27 @@ void FreeSeatsDeacreseTree(struct Tree*& Root, std::string flight_id) {
         }
     }
     return ;
+}
+
+void FreeSeatsIncreaseTree(struct Tree*& Root, std::string flight_id) {
+    Tree* cur = Root;
+    if (!(cur)) {
+        return;
+    }
+    while (cur) {
+        if (cur->value.flight_id == flight_id) {
+            cur->value.free_seat_amount++;
+            return;
+        }
+        if (flight_id > cur->value.flight_id) {
+            cur = cur->right;
+        }
+        else {
+
+            cur = cur->left;
+        }
+    }
+    return;
 }
 
 void SymmericalShowTree(Tree* p) {

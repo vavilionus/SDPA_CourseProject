@@ -24,6 +24,8 @@ int main()
         hash_table[i] = NULL;
     }
 
+    
+
     load(hash_table, flight_tree, plane_ticket_list, "load.txt");
     ListQuickSort(plane_ticket_list);
     loadProceeder(flight_tree, plane_ticket_list);
@@ -90,7 +92,8 @@ int main()
             ShowListOfPlaneTickets(plane_ticket_list);
             break;
         case 10:
-
+            ReturnTicket(flight_tree, plane_ticket_list);
+            ShowListOfPlaneTickets(plane_ticket_list);
             break;
         }
 
