@@ -19,6 +19,7 @@ struct ListOfPassengers {
 };
 
 void AddListOfPassengers(ListOfPassengers** head ,Passenger elem);
+void DeleteListOfPassengers(ListOfPassengers** head, std::string delete_id);
 void ShowListOfPassengers(ListOfPassengers* head);
 int HashFunc(std::string key);
 void AddHash(ListOfPassengers* arr[], Passenger elem);
