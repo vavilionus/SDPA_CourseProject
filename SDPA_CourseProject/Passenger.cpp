@@ -113,6 +113,11 @@ void AddHash(ListOfPassengers* arr[], Passenger elem) {
 	AddListOfPassengers(&arr[HashFunc(elem.passport_id)], elem);
 	
 }
+void DeleteHash(ListOfPassengers* arr[], std::string passport_id) {
+
+	DeleteListOfPassengers(&arr[HashFunc(passport_id)], passport_id);
+
+}
 
 void FreeListOfPassengers(ListOfPassengers** head) {
 	ListOfPassengers* cur = NULL;

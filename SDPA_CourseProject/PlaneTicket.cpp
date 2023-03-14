@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include "PlaneTicket.h"
+#include "Flight.h"
 
 void AddListOfPlaneTickets(ListOfPlaneTickets*& head, PlaneTicket elem) {
 	ListOfPlaneTickets* cur = head;
@@ -123,6 +124,98 @@ bool DeleteListOfPlaneTicketsByFlightID(ListOfPlaneTickets*& head, std::string f
 	}
 
 	return 0;
+}
+
+bool DeleteListOfPlaneTicketsByPassportID(Tree*& flight_tree, ListOfPlaneTickets*& head, std::string passport_id) {
+	ListOfPlaneTickets* cur = head;
+	ListOfPlaneTickets* holder;
+
+	if (cur == NULL) {
+		return 0;
+	}
+	if ((head->next == head)) {
+		if (head->value.passport_id == passport_id) {
+			FreeSeatsIncreaseTree(flight_tree, head->value.flight_id);
+			holder = head;
+			delete holder;
+			head = NULL;
+			return 1;
+		}
+		return 0;
+	}
+
+	while (head->value.passport_id == passport_id) {
+		if ((head->next == head)) {
+			if (head->value.passport_id == passport_id) {
+				FreeSeatsIncreaseTree(flight_tree, head->value.flight_id);
+				holder = head;
+				delete holder;
+				head = NULL;
+				return 1;
+			}
+			return 0;
+		}
+		FreeSeatsIncreaseTree(flight_tree, head->value.flight_id);
+		while (cur->next != head) {
+			cur = cur->next;
+		}
+		holder = cur->next;
+		cur->next = cur->next->next;
+		head = cur->next;
+
+		delete holder;
+	}
+
+	while (cur->next->next != head) {
+		if (cur->next->value.passport_id == passport_id) {
+			FreeSeatsIncreaseTree(flight_tree, cur->next->value.flight_id);
+			holder = cur->next;
+			cur->next = cur->next->next;
+			delete holder;
+		}
+		else {
+			cur = cur->next;
+		}
+	}
+
+	if (cur->next->value.passport_id == passport_id) {
+		FreeSeatsIncreaseTree(flight_tree, cur->next->value.flight_id);
+		holder = cur->next;
+		cur->next = cur->next->next;
+		delete holder;
+	}
+
+	if ((head->next == head)) {
+		if (head->value.passport_id == passport_id) {
+			FreeSeatsIncreaseTree(flight_tree, head->value.flight_id);
+			holder = head;
+			delete holder;
+			head = NULL;
+			return 1;
+		}
+		return 0;
+	}
+
+	return 0;
+}
+
+int HowManyTicketsByPassportId(ListOfPlaneTickets*& head, std::string passport_id) {
+	int counter = 0;
+	ListOfPlaneTickets* cur = head;
+	if (!(head)) {
+		return counter;
+	}
+	if (head->value.passport_id == passport_id) {
+		counter++;
+	}
+	cur = cur->next;
+	while (cur != head) {
+		if (cur->value.passport_id == passport_id) {
+			counter++;
+		}
+		cur = cur->next;
+	}
+	return counter;
 }
 
 void ShowListOfPlaneTickets(ListOfPlaneTickets* head) {

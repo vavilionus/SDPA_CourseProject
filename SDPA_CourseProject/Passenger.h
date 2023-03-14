@@ -23,6 +23,7 @@ void DeleteListOfPassengers(ListOfPassengers** head, std::string delete_id);
 void ShowListOfPassengers(ListOfPassengers* head);
 int HashFunc(std::string key);
 void AddHash(ListOfPassengers* arr[], Passenger elem);
+void DeleteHash(ListOfPassengers* arr[], std::string passport_id);
 void FreeListOfPassengers(ListOfPassengers** head);
 bool IsIdUnique(ListOfPassengers* arr[], std::string id);
 

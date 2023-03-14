@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include "Flight.h"
 
 struct PlaneTicket {
 	std::string passport_id = "NNNN-NNNNNN";// 4 - 6 цифр
@@ -20,6 +21,8 @@ struct ListOfPlaneTickets {
 void AddListOfPlaneTickets(ListOfPlaneTickets*& head, PlaneTicket elem);
 bool DeleteListOfPlaneTickets(ListOfPlaneTickets*& head, std::string ticket_id);
 bool DeleteListOfPlaneTicketsByFlightID(ListOfPlaneTickets*& head, std::string flight_id);
+bool DeleteListOfPlaneTicketsByPassportID(Tree*& flight_tree, ListOfPlaneTickets*& head, std::string passport_id);
+int HowManyTicketsByPassportId(ListOfPlaneTickets*& head, std::string passport_id);
 void ShowListOfPlaneTickets(ListOfPlaneTickets* head);
 
 void ConvertIn(ListOfPlaneTickets*& root);

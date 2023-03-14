@@ -16,7 +16,7 @@
 void CreatePassenger(ListOfPassengers* arr[]);
 
 //2. Delete passenger info
-
+void DeletePassanger(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list);
 
 //3 Отображение всех зарегестрированных пользователей(1. только паспорт и фио 2. вся ифа)
 void ShowAllPassenger(ListOfPassengers* arr[]);

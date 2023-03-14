@@ -33,6 +33,35 @@ void CreatePassenger(ListOfPassengers* arr[]) {
     AddHash(arr, elem);
 }
 
+//2. Delete passenger info
+void DeletePassanger(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list) {
+    Passenger elem;
+    int operathion_choice;
+    std::string passport_id = "NNNN-NNNNNN";
+    std::cout << "Input passport ID (NNNN-NNNNNN):" << std::endl << "\t";
+    passport_id = PassportIdInput();
+    if (IsIdUnique(arr, passport_id)) {
+        std::cout << "This Passport ID isn't present in the system!" << std::endl;
+        return;
+    }
+    if (HowManyTicketsByPassportId(plane_tickets_list, passport_id) != 0) {
+        std::cout << "This passanger have " << HowManyTicketsByPassportId(plane_tickets_list, passport_id) << " bought tickets." << std::endl;
+        std::cout << "Are you sure you want to delete this Passanger, and return those tickes?" << std::endl
+            << "\tYes - 1; No - 2 \n\tIN:   ";
+        std::cin >> operathion_choice;
+        reader(&operathion_choice, 1, 2);
+        if (operathion_choice == 2) {
+            std::cout << "\n\nDeletion is stopped!" << std::endl;
+            return;
+        }
+        else {
+            DeleteListOfPlaneTicketsByPassportID(flight_tree, plane_tickets_list, passport_id);
+        }
+    }
+    std::cout << std::endl;
+    DeleteHash(arr, passport_id);
+    std::cout << std::endl;
+}
 
 //3
 void ShowAllPassenger(ListOfPassengers* arr[]) {
@@ -55,7 +84,7 @@ void ShowAllPassenger(ListOfPassengers* arr[]) {
 
 }
 
-//5. Add new Flightd
+//5. Add new Flight
 void CreateFlight(Tree*& flight_tree) {
     Flight elem;
     std::string departure_name;
