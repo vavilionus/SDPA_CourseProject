@@ -40,7 +40,9 @@ Tree* balance(Tree* p);
 
 Tree* AddTreeElem(Tree* Root, Flight n);
 Tree* DeleteTreeElem(struct Tree*& Root, Flight value);
+Tree* ClearTreeElem(struct Tree*& p);
 bool FindTreeBool(struct Tree*& Root, Flight value);
+void ShowTreeElem(struct Tree*& Root, std::string flight_id);
 bool isFreeSeatsTreeBool(struct Tree*& Root, Flight value);
 Flight TakeElemTree(struct Tree*& Root, Flight value);
 void FreeSeatsDeacreseTree(struct Tree*& Root, std::string flight_id);

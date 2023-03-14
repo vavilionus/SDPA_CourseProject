@@ -22,6 +22,7 @@ void AddListOfPlaneTickets(ListOfPlaneTickets*& head, PlaneTicket elem);
 bool DeleteListOfPlaneTickets(ListOfPlaneTickets*& head, std::string ticket_id);
 bool DeleteListOfPlaneTicketsByFlightID(ListOfPlaneTickets*& head, std::string flight_id);
 bool DeleteListOfPlaneTicketsByPassportID(Tree*& flight_tree, ListOfPlaneTickets*& head, std::string passport_id);
+void ClearListOfPlaneTickets(ListOfPlaneTickets*& head);
 int HowManyTicketsByPassportId(ListOfPlaneTickets*& head, std::string passport_id);
 void ShowListOfPlaneTickets(ListOfPlaneTickets* head);
 

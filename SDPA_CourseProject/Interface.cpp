@@ -46,7 +46,7 @@ void DeletePassanger(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTic
     }
     if (HowManyTicketsByPassportId(plane_tickets_list, passport_id) != 0) {
         std::cout << "This passanger have " << HowManyTicketsByPassportId(plane_tickets_list, passport_id) << " bought tickets." << std::endl;
-        std::cout << "Are you sure you want to delete this Passanger, and return those tickes?" << std::endl
+        std::cout << "Are you sure you want to delete this Passanger, and return those tickets?" << std::endl
             << "\tYes - 1; No - 2 \n\tIN:   ";
         std::cin >> operathion_choice;
         reader(&operathion_choice, 1, 2);
@@ -64,6 +64,86 @@ void DeletePassanger(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTic
 }
 
 //3
+void ShowPassenger(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list) {
+    int operathion_choice;
+    int passangers_flights_size;
+    bool flag_is_flight_unic = 1;
+    std::string* passangers_flights = NULL;
+    std::string passport_id;
+    int ticket_counter = 0;
+    ListOfPassengers* cur;
+    ListOfPlaneTickets* ticket_cur = plane_tickets_list;
+    std::cout << "\nPlease choose operathion:\n    1. Show all pasangers passport info\n    2. Show passangers Flight info\n    3. Show passengers info by fullname\n\nIN: ";
+
+    std::cin >> operathion_choice;
+    reader(&operathion_choice, 1, 3);
+    switch (operathion_choice) {
+    case (1):
+        ShowAllPassenger(arr);
+        
+        break;
+    case (2):
+        std::cout << "Input passport ID (NNNN-NNNNNN):" << std::endl << "\t";
+        passport_id = PassportIdInput();
+        if (IsIdUnique(arr, passport_id)) {
+            std::cout << "This Passport ID isn't present in the system!" << std::endl;
+            return;
+        }
+
+        std::cout << "/-----------------------------------------------------------------------------------------------------------------\\" << std::endl;
+        std::cout << "|  passport Id  |            Full Name           |            Authority           | Date of issue | Date of birth |" << std::endl;
+        std::cout << "|---------------|--------------------------------|--------------------------------|---------------|---------------|" << std::endl;
+        cur = arr[HashFunc(passport_id)];
+        while (cur->value.passport_id != passport_id)
+        {
+            cur = cur->next;
+        }
+        std::cout << "| " << std::setw(13) << cur->value.passport_id << " | " << std::setw(30) << cur->value.full_name << " | " << std::setw(30) << cur->value.place << " | " << std::setw(13) << cur->value.date_of_issue << " | " << std::setw(13) << cur->value.date_of_issue << " | " << std::endl;
+        std::cout << "|---------------|--------------------------------|--------------------------------|---------------|---------------|" << std::endl << std::endl;
+        
+        
+        passangers_flights_size = HowManyTicketsByPassportId(plane_tickets_list, passport_id);
+        if (passangers_flights_size == 0) {
+            return;
+        }
+        passangers_flights = new std::string [passangers_flights_size];
+
+        if (plane_tickets_list->value.passport_id == passport_id) {
+            passangers_flights[ticket_counter++] = plane_tickets_list->value.flight_id;
+        }
+        ticket_cur = ticket_cur->next;
+
+        while (ticket_cur != plane_tickets_list) {
+            flag_is_flight_unic = 1;
+            if (ticket_cur->value.passport_id == passport_id){
+                for (int i = 0; i < ticket_counter; i++) {
+                    if (passangers_flights[i] == ticket_cur->value.flight_id) {
+                        flag_is_flight_unic = 0;
+                    }
+                }
+                if (flag_is_flight_unic) {
+                    passangers_flights[ticket_counter++] = ticket_cur->value.flight_id;
+                }
+            }
+            ticket_cur = ticket_cur->next;
+        }
+        std::cout << "Passangers Flights: " << std::endl;
+        std::cout << "/---------|--------------------------------|--------------------------------|--------------------------------|------------|-------|-----|-----\\" << std::endl;
+        std::cout << "|    ID   |             Company            |            Deparure            |             Arrival            |  Dep.Date  | DTime |seats|sfree|" << std::endl;
+        std::cout << "|---------|--------------------------------|--------------------------------|--------------------------------|------------|-------|-----|-----|" << std::endl;
+        for (int i = 0; i < ticket_counter; i++) {
+            ShowTreeElem(flight_tree, passangers_flights[i]);
+        }
+        delete[] passangers_flights;
+        break;
+
+    case (3):
+        //
+            ShowAllPassenger(arr);
+        break;
+    }
+    
+}
 void ShowAllPassenger(ListOfPassengers* arr[]) {
     int operathion_choose;
     //std::cout << "/-----------------------------------------------------------------------------------------------------------------\\" << std::endl;
@@ -82,6 +162,36 @@ void ShowAllPassenger(ListOfPassengers* arr[]) {
         }
     }
 
+}
+
+//4. Clear ALL passangers data
+void ClearAllPassangersData (ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list) {
+    int operathion_choice;
+    ListOfPassengers* cur;
+    std::cout << "Are you sure you want to delete all Passangers, and return all tickets?" << std::endl
+        << "\tYes - 1; No - 2 \n\tIN:   ";
+    std::cin >> operathion_choice;
+    reader(&operathion_choice, 1, 2);
+    if (operathion_choice == 2) {
+        std::cout << "\n\Passangers wipe is stopped!" << std::endl;
+        return;
+    }
+    else {
+        for (int i = 0; i < 100; i++) {
+            cur = arr[i];
+            if (!cur) {
+                continue;
+            }
+            else {
+                while(cur != NULL){
+                    DeleteListOfPlaneTicketsByPassportID(flight_tree, plane_tickets_list, cur->value.passport_id);
+                    cur = cur->next;
+                }
+            }
+            ClearListOfPassengers(&(arr[i]));
+            arr[i] = NULL;
+        }
+    }
 }
 
 //5. Add new Flight
@@ -156,6 +266,24 @@ void DeleteFlight(Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list) {
 
 }
 
+//8. Clear ALL Flights
+void ClearAllFlightData(Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list) {
+    int operathion_choice;
+    ListOfPassengers* cur;
+    std::cout << "Are you sure you want to delete all Passangers, and return all tickets?" << std::endl
+        << "\tYes - 1; No - 2 \n\tIN:   ";
+    std::cin >> operathion_choice;
+    reader(&operathion_choice, 1, 2);
+    if (operathion_choice == 2) {
+        std::cout << "\n\Passangers wipe is stopped!" << std::endl;
+        return;
+    }
+    else {
+        flight_tree = ClearTreeElem(flight_tree);
+        ClearListOfPlaneTickets(plane_tickets_list);
+        plane_tickets_list = NULL;
+    }
+}
 //9. Buy ticket
 void BuyTicket(ListOfPassengers* arr[] ,Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list) {
     std::string passport_id = "NNNN-NNNNNN";

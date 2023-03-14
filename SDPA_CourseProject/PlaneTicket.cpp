@@ -199,6 +199,20 @@ bool DeleteListOfPlaneTicketsByPassportID(Tree*& flight_tree, ListOfPlaneTickets
 	return 0;
 }
 
+void ClearListOfPlaneTickets(ListOfPlaneTickets*& head) {
+	ConvertIn(head);
+	if (!(head)) {
+		return;
+	}
+	ListOfPlaneTickets* cur = NULL;
+	while ((head)->next) {
+		cur = head;
+		head = (head)->next;
+		delete cur;
+	}
+	delete head;
+}
+
 int HowManyTicketsByPassportId(ListOfPlaneTickets*& head, std::string passport_id) {
 	int counter = 0;
 	ListOfPlaneTickets* cur = head;

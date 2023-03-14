@@ -12,10 +12,12 @@
 #include "Interface.h"
 #include "Flight.h"
 #include "PlaneTicket.h"
+#include <Windows.h>
+
 
 int main()
 {
-    
+    //SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE) ,ENABLE_LINE_INPUT);
     int operathion_choice;
     ListOfPassengers* hash_table[100];
     Tree* flight_tree = NULL;
@@ -39,7 +41,15 @@ int main()
         case 0:
             //тут нужна очистка всех структур
             //free_Price(&list);
-
+            flight_tree = ClearTreeElem(flight_tree);
+            for (int i = 0; i < 100; i++) {
+                ClearListOfPassengers(&hash_table[i]);
+            }
+            ClearListOfPlaneTickets(plane_ticket_list);
+            delete[] *hash_table;
+            
+            delete flight_tree;
+            std::cout << "\n\nProgram is finoshed!" << std::endl;
             return 0;
             _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
             _CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDOUT);
@@ -59,12 +69,12 @@ int main()
 
         case 3:
 
-            ShowAllPassenger(hash_table);
+            ShowPassenger(hash_table, flight_tree, plane_ticket_list);
             
             break;
 
         case 4:
-            
+            ClearAllPassangersData(hash_table, flight_tree, plane_ticket_list);
             break;
 
         case 5:
@@ -87,7 +97,7 @@ int main()
             break;
 
         case 8:
-            
+            ClearAllFlightData(flight_tree, plane_ticket_list);
             break;
 
         case 9:
