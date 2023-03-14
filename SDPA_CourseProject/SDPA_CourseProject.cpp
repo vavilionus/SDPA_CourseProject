@@ -72,7 +72,9 @@ int main()
             break;
 
         case 6:
-            
+            ShowListOfPlaneTickets(plane_ticket_list);
+            DeleteFlight(flight_tree, plane_ticket_list);
+            ShowListOfPlaneTickets(plane_ticket_list);
             break;
 
         case 7:
@@ -88,10 +90,12 @@ int main()
             break;
 
         case 9:
+            ShowListOfPlaneTickets(plane_ticket_list);
             BuyTicket(hash_table, flight_tree, plane_ticket_list);
             ShowListOfPlaneTickets(plane_ticket_list);
             break;
         case 10:
+            ShowListOfPlaneTickets(plane_ticket_list);
             ReturnTicket(flight_tree, plane_ticket_list);
             ShowListOfPlaneTickets(plane_ticket_list);
             break;

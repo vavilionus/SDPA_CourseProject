@@ -164,6 +164,26 @@ bool isFreeSeatsTreeBool(struct Tree*& Root, Flight value) {
     return 0;
 }
 
+Flight TakeElemTree(struct Tree*& Root, Flight value) {
+    Tree* cur = Root;
+    if (!(cur)) {
+        return value;
+    }
+    while (cur) {
+        if (cur->value.flight_id == value.flight_id) {
+            value = cur->value;
+        }
+        if (value.flight_id > cur->value.flight_id) {
+            cur = cur->right;
+        }
+        else {
+
+            cur = cur->left;
+        }
+    }
+    return value;
+}
+
 void FreeSeatsDeacreseTree(struct Tree*& Root, std::string flight_id) {
     Tree* cur = Root;
     if (!(cur)) {

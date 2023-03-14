@@ -97,6 +97,36 @@ void CreateFlight(Tree*& flight_tree) {
     flight_tree = AddTreeElem(flight_tree, elem);
 }
 
+//6. Delete Flight
+void DeleteFlight(Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list) {
+    Flight elem;
+    int operathion_choice;
+    std::cout << "Input flight ID (AAA-NNN):" << std::endl << "\t";
+    elem.flight_id = FlightIdInput();
+    if (!FindTreeBool(flight_tree, elem)) {
+        std::cout << "\nThis Flight ID is NOT present in the system!\n" << std::endl;
+        return;
+    }
+    elem = TakeElemTree(flight_tree, elem);
+    if ((elem.seat_amount - elem.free_seat_amount) != 0) {
+        std::cout << "\nThis Flight have " << elem.seat_amount - elem.free_seat_amount << " bought tickets!\n" << std::endl;
+        std::cout << "Are you sure you want to delete this Flight, and return those tickes?" << std::endl 
+            << "\tYes - 1; No - 2 \n\tIN:   ";
+        std::cin >> operathion_choice;
+        reader(&operathion_choice, 1, 2);
+        if (operathion_choice == 2) {
+            std::cout << "\n\nDeletion is stopped!" << std::endl;
+            return;
+        }
+        else {
+            DeleteListOfPlaneTicketsByFlightID(plane_tickets_list, elem.flight_id);
+        }
+    }
+    flight_tree = DeleteTreeElem(flight_tree, elem);
+    std::cout << "\n\nDeletion is succesefull!" << std::endl;
+
+}
+
 //9. Buy ticket
 void BuyTicket(ListOfPassengers* arr[] ,Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list) {
     std::string passport_id = "NNNN-NNNNNN";

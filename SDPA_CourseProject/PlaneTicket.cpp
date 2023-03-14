@@ -58,6 +58,73 @@ bool DeleteListOfPlaneTickets(ListOfPlaneTickets*& head, std::string ticket_id) 
 	return 0;
 }
 
+bool DeleteListOfPlaneTicketsByFlightID(ListOfPlaneTickets*& head, std::string flight_id) {
+	ListOfPlaneTickets* cur = head;
+	ListOfPlaneTickets* holder;
+
+	if (cur == NULL) {
+		return 0;
+	}
+	if ((head->next == head)) {
+		if (head->value.flight_id == flight_id) {
+			holder = head;
+			delete holder;
+			head = NULL;
+			return 1;
+		}
+		return 0;
+	}
+
+	while (head->value.flight_id == flight_id) {
+		if ((head->next == head)) {
+			if (head->value.flight_id == flight_id) {
+				holder = head;
+				delete holder;
+				head = NULL;
+				return 1;
+			}
+			return 0;
+		}
+		while (cur->next != head) {
+			cur = cur->next;
+		}
+		holder = cur->next;
+		cur->next = cur->next->next;
+		head = cur->next;
+
+		delete holder;
+	}
+
+	while (cur->next->next != head) {
+		if (cur->next->value.flight_id == flight_id) {
+			holder = cur->next;
+			cur->next = cur->next->next;
+			delete holder;
+		}
+		else {
+			cur = cur->next;
+		}
+	}
+
+	if (cur->next->value.flight_id == flight_id) {
+		holder = cur->next;
+		cur->next = cur->next->next;
+		delete holder;
+	}
+
+	if ((head->next == head)) {
+		if (head->value.flight_id == flight_id) {
+			holder = head;
+			delete holder;
+			head = NULL;
+			return 1;
+		}
+		return 0;
+	}
+
+	return 0;
+}
+
 void ShowListOfPlaneTickets(ListOfPlaneTickets* head) {
 	ListOfPlaneTickets* cur = head;
 	if (!(head)) {

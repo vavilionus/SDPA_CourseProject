@@ -14,13 +14,18 @@
 
 //1.Регистрация нового пассажира
 void CreatePassenger(ListOfPassengers* arr[]);
-//2
+
+//2. Delete passenger info
+
 
 //3 Отображение всех зарегестрированных пользователей(1. только паспорт и фио 2. вся ифа)
 void ShowAllPassenger(ListOfPassengers* arr[]);
 
 //5. Add new Flightd
 void CreateFlight(Tree*& flight_tree);
+
+//6. Delete Flight
+void DeleteFlight(Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list);
 
 //9. Buy ticket
 void BuyTicket(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list);
