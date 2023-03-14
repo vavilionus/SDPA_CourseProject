@@ -232,6 +232,25 @@ int HowManyTicketsByPassportId(ListOfPlaneTickets*& head, std::string passport_i
 	return counter;
 }
 
+int HowManyTicketsByFlightId(ListOfPlaneTickets*& head, std::string flight_id) {
+	int counter = 0;
+	ListOfPlaneTickets* cur = head;
+	if (!(head)) {
+		return counter;
+	}
+	if (head->value.flight_id == flight_id) {
+		counter++;
+	}
+	cur = cur->next;
+	while (cur != head) {
+		if (cur->value.flight_id == flight_id) {
+			counter++;
+		}
+		cur = cur->next;
+	}
+	return counter;
+}
+
 void ShowListOfPlaneTickets(ListOfPlaneTickets* head) {
 	ListOfPlaneTickets* cur = head;
 	if (!(head)) {

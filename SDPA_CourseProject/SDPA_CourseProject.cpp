@@ -89,11 +89,8 @@ int main()
             break;
 
         case 7:
-            std::cout << "/---------|--------------------------------|--------------------------------|--------------------------------|------------|-------|-----|-----\\" << std::endl;
-            std::cout << "|    ID   |             Company            |            Deparure            |             Arrival            |  Dep.Date  | DTime |seats|sfree|" << std::endl;
-            std::cout << "|---------|--------------------------------|--------------------------------|--------------------------------|------------|-------|-----|-----|" << std::endl;
-
-            SymmericalShowTree(flight_tree);
+            
+            ShowFlight(hash_table, flight_tree, plane_ticket_list);
             break;
 
         case 8:

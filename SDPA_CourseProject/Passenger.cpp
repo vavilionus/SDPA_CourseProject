@@ -91,6 +91,26 @@ void ShowListOfPassengers(ListOfPassengers* head) {
 	}
 }
 
+Passenger TakeListOfPassengersElem(ListOfPassengers* arr[], std::string passsanger_id) {
+	ListOfPassengers* cur = arr[HashFunc(passsanger_id)];
+	Passenger elem;
+	if (cur == NULL) {
+		return elem;
+	}
+	else {
+		while (cur->next) {
+			if (cur->value.passport_id == passsanger_id) {
+				return cur->value;
+			}
+			cur = cur->next;
+		}
+		if (cur->value.passport_id == passsanger_id) {
+			return cur->value;
+		}
+	}
+	return elem;
+}
+
 void ShowListOfPassengersLite(ListOfPassengers* head) {
 	ListOfPassengers* cur = head;
 	if (!(head)) {

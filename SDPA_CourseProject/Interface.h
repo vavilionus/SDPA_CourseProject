@@ -9,6 +9,8 @@
 #include "PlaneTicket.h"
 #include "Passenger.h"
 #include "Flight.h"
+#include <string_view>
+#include <type_traits>
 
 
 
@@ -30,6 +32,9 @@ void CreateFlight(Tree*& flight_tree);
 
 //6. Delete Flight
 void DeleteFlight(Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list);
+
+//7  Show Flight
+void ShowFlight(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list);
 
 //8. Clear ALL Flights
 void ClearAllFlightData(Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list);

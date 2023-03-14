@@ -11,6 +11,7 @@
 #include "Flight.h"
 #include "PlaneTicket.h"
 
+
 //1
 void CreatePassenger(ListOfPassengers* arr[]) {
     Passenger elem;
@@ -70,6 +71,7 @@ void ShowPassenger(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTicke
     bool flag_is_flight_unic = 1;
     std::string* passangers_flights = NULL;
     std::string passport_id;
+    std::string full_name, full_name_holder;
     int ticket_counter = 0;
     ListOfPassengers* cur;
     ListOfPlaneTickets* ticket_cur = plane_tickets_list;
@@ -138,8 +140,39 @@ void ShowPassenger(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTicke
         break;
 
     case (3):
-        //
-            ShowAllPassenger(arr);
+        std::cout << "Input a searching word: :" << std::endl << "\t";
+        full_name = NameInput();
+        std::transform(full_name.begin(), full_name.end(), full_name.begin(),
+            [](unsigned char c) { return std::tolower(c); });
+        std::cout << "\nResult(s) that fulfill your request:\n" << std::endl;
+        std::cout << "/------------------------------------------------\\" << std::endl;
+        std::cout << "|  passport Id  |            Full Name           |" << std::endl;
+        std::cout << "|---------------|--------------------------------|" << std::endl;
+
+        for (int i = 0; i < 100; i++) {
+            if (!(arr[i])) {
+                continue;
+            }
+            else {
+                cur = arr[i];
+                //std::cout << "/-----------------------------------------------------------------------------------------------------------------\\" << std::endl;
+                //std::cout << "|  passport Id  |            Full Name           |            Authority           | Date of issue | Date of birth |" << std::endl;
+                //std::cout << "|---------------|--------------------------------|--------------------------------|---------------|---------------|" << std::endl;
+                while (cur)
+                {
+                    full_name_holder = cur->value.full_name;
+                    std::transform(full_name_holder.begin(), full_name_holder.end(), full_name_holder.begin(),
+                        [](unsigned char c) { return std::tolower(c); });
+                    if ((full_name_holder).contains((full_name))) {
+                        std::cout << "| " << std::setw(13) << cur->value.passport_id << " | " << std::setw(30) << cur->value.full_name << " | " << std::endl;
+                        std::cout << "|---------------|--------------------------------|" << std::endl;
+                    }
+                    cur = cur->next;
+                }
+
+            }
+        }
+            
         break;
     }
     
@@ -263,6 +296,93 @@ void DeleteFlight(Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list) {
     }
     flight_tree = DeleteTreeElem(flight_tree, elem);
     std::cout << "\n\nDeletion is succesefull!" << std::endl;
+
+}
+
+//7. Show Flight
+void ShowFlight(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list) {
+    int operathion_choice, passengers_size, ticket_counter, flag_is_unic;
+    ticket_counter = 0;
+    std::string flight_id;
+    std::string* passangers;
+    ListOfPlaneTickets* ticket_cur = plane_tickets_list;
+    Flight elem;
+    Passenger passenger_elem;
+    
+    
+    std::cout << "\nPlease choose operathion:\n    1. Show all flights info\n    2. Show Flights info by ID\n    3. Show passengers info by arrival name\n\nIN: ";
+
+    std::cin >> operathion_choice;
+    reader(&operathion_choice, 1, 3);
+    switch (operathion_choice) {
+    case(1):
+        std::cout << "/---------|--------------------------------|--------------------------------|--------------------------------|------------|-------|-----|-----\\" << std::endl;
+        std::cout << "|    ID   |             Company            |            Deparure            |             Arrival            |  Dep.Date  | DTime |seats|sfree|" << std::endl;
+        std::cout << "|---------|--------------------------------|--------------------------------|--------------------------------|------------|-------|-----|-----|" << std::endl;
+
+        SymmericalShowTree(flight_tree);
+        break;
+    case(2):
+        std::cout << "Input flight ID (AAA-NNN):" << std::endl << "\t";
+        flight_id = FlightIdInput();
+        elem.flight_id = flight_id;
+        if (!FindTreeBool(flight_tree, elem)) {
+            std::cout << "\nThis Flight ID is NOT present in the system!\n" << std::endl;
+            return;
+        }
+        elem = TakeElemTree(flight_tree, elem);
+        std::cout << "/---------|--------------------------------|--------------------------------|--------------------------------|------------|-------|-----|-----\\" << std::endl;
+        std::cout << "|    ID   |             Company            |            Deparure            |             Arrival            |  Dep.Date  | DTime |seats|sfree|" << std::endl;
+        std::cout << "|---------|--------------------------------|--------------------------------|--------------------------------|------------|-------|-----|-----|" << std::endl;
+
+        std::cout << "| " << std::setw(7) << elem.flight_id << " | " << std::setw(30) << elem.company_name << " | "
+            << std::setw(30) << elem.departure_name << " | " << std::setw(30) << elem.arrival_name << " | "
+            << std::setw(10) << elem.date_of_departure << " | "
+            << std::setw(5) << elem.time_of_departure << " | " << std::setw(3) << elem.seat_amount << " | "
+            << std::setw(3) << elem.free_seat_amount << " | " << std::endl;
+        std::cout << "|---------|--------------------------------|--------------------------------|--------------------------------|------------|-------|-----|-----|" << std::endl;
+
+        passengers_size = HowManyTicketsByFlightId(plane_tickets_list, flight_id);
+        if (passengers_size == 0) {
+            std::cout << "\nThis Flight ID has no passengers in the system!\n" << std::endl;
+            return;
+        }
+        passangers = new std::string[passengers_size];
+
+        
+        if (plane_tickets_list->value.flight_id == flight_id) {
+            passangers[ticket_counter++] = plane_tickets_list->value.passport_id;
+        }
+        ticket_cur = ticket_cur->next;
+
+        while (ticket_cur != plane_tickets_list) {
+            flag_is_unic = 1;
+            if (ticket_cur->value.flight_id == flight_id) {
+                for (int i = 0; i < ticket_counter; i++) {
+                    if (passangers[i] == ticket_cur->value.passport_id) {
+                        flag_is_unic = 0;
+                    }
+                }
+                if (flag_is_unic) {
+                    passangers[ticket_counter++] = ticket_cur->value.passport_id;
+                }
+            }
+            ticket_cur = ticket_cur->next;
+        }
+        std::cout << "\nResult(s) that fulfill your request:\n" << std::endl;
+        std::cout << "/------------------------------------------------\\" << std::endl;
+        std::cout << "|  passport Id  |            Full Name           |" << std::endl;
+        std::cout << "|---------------|--------------------------------|" << std::endl; 
+        for (int i = 0; i < ticket_counter; i++){
+            passenger_elem = TakeListOfPassengersElem(arr, passangers[i]);
+            std::cout << "| " << std::setw(13) << passenger_elem.passport_id << " | " << std::setw(30) << passenger_elem.full_name << " | " << std::endl;
+            std::cout << "|---------------|--------------------------------|" << std::endl;
+        }
+        delete[] passangers;
+
+        break;
+    }
+    
 
 }
 

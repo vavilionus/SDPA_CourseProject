@@ -24,6 +24,7 @@ bool DeleteListOfPlaneTicketsByFlightID(ListOfPlaneTickets*& head, std::string f
 bool DeleteListOfPlaneTicketsByPassportID(Tree*& flight_tree, ListOfPlaneTickets*& head, std::string passport_id);
 void ClearListOfPlaneTickets(ListOfPlaneTickets*& head);
 int HowManyTicketsByPassportId(ListOfPlaneTickets*& head, std::string passport_id);
+int HowManyTicketsByFlightId(ListOfPlaneTickets*& head, std::string flight_id);
 void ShowListOfPlaneTickets(ListOfPlaneTickets* head);
 
 void ConvertIn(ListOfPlaneTickets*& root);

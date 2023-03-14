@@ -21,6 +21,7 @@ struct ListOfPassengers {
 void AddListOfPassengers(ListOfPassengers** head ,Passenger elem);
 void DeleteListOfPassengers(ListOfPassengers** head, std::string delete_id);
 void ClearListOfPassengers(ListOfPassengers** head);
+Passenger TakeListOfPassengersElem(ListOfPassengers* arr[], std::string passsanger_id);
 void ShowListOfPassengers(ListOfPassengers* head);
 int HashFunc(std::string key);
 void AddHash(ListOfPassengers* arr[], Passenger elem);
