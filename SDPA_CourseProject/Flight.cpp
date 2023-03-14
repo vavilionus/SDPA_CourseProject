@@ -118,6 +118,15 @@ Tree* DeleteTreeElem(struct Tree*& Root, Flight value) {
     return balance(Root);
 }
 
+Tree* ClearTreeElem(struct Tree*& p) {
+    if (p != NULL) {
+        if (p->left) ClearTreeElem(p->left);
+        if (p->right) ClearTreeElem(p->right);
+        delete p;
+        return NULL;
+    }
+}
+
 //возвращает 1, если в дереве уже сть такой полет
 bool FindTreeBool(struct Tree*& Root, Flight value) {
     Tree* cur = Root;
@@ -137,6 +146,32 @@ bool FindTreeBool(struct Tree*& Root, Flight value) {
         }
     }
     return 0;
+}
+
+void ShowTreeElem(struct Tree*& Root, std::string flight_id) {
+    Tree* p = Root;
+    if (!(p)) {
+        return ;
+    }
+    while (p) {
+        if (p->value.flight_id == flight_id) {
+            std::cout << "| " << std::setw(7) << p->value.flight_id << " | " << std::setw(30) << p->value.company_name << " | "
+                << std::setw(30) << p->value.departure_name << " | " << std::setw(30) << p->value.arrival_name << " | "
+                << std::setw(10) << p->value.date_of_departure << " | "
+                << std::setw(5) << p->value.time_of_departure << " | " << std::setw(3) << p->value.seat_amount << " | "
+                << std::setw(3) << p->value.free_seat_amount << " | " << std::endl;
+            std::cout << "|---------|--------------------------------|--------------------------------|--------------------------------|------------|-------|-----|-----|" << std::endl;
+            return;
+        }
+        if (flight_id > p->value.flight_id) {
+            p = p->right;
+        }
+        else {
+
+            p = p->left;
+        }
+    }
+    return;
 }
 
 bool isFreeSeatsTreeBool(struct Tree*& Root, Flight value) {
@@ -162,6 +197,26 @@ bool isFreeSeatsTreeBool(struct Tree*& Root, Flight value) {
         }
     }
     return 0;
+}
+
+Flight TakeElemTree(struct Tree*& Root, Flight value) {
+    Tree* cur = Root;
+    if (!(cur)) {
+        return value;
+    }
+    while (cur) {
+        if (cur->value.flight_id == value.flight_id) {
+            value = cur->value;
+        }
+        if (value.flight_id > cur->value.flight_id) {
+            cur = cur->right;
+        }
+        else {
+
+            cur = cur->left;
+        }
+    }
+    return value;
 }
 
 void FreeSeatsDeacreseTree(struct Tree*& Root, std::string flight_id) {
@@ -216,7 +271,7 @@ void SymmericalShowTree(Tree* p) {
         << std::setw(5) << p->value.time_of_departure << " | " << std::setw(3) << p->value.seat_amount << " | "
         << std::setw(3) << p->value.free_seat_amount << " | " << std::endl;
     std::cout << "|---------|--------------------------------|--------------------------------|--------------------------------|------------|-------|-----|-----|" << std::endl;
-
+    SymmericalShowTree(p->right);
 }
 
 //dev func

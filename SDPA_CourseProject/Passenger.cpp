@@ -57,6 +57,20 @@ void DeleteListOfPassengers(ListOfPassengers** head, std::string delete_id) {
 	std::cout << "element with id: " << delete_id << " isn't found";
 }
 
+void ClearListOfPassengers(ListOfPassengers** head) {
+	if (!*(head)) {
+		return;
+	}
+	ListOfPassengers* cur = NULL;
+	while ((*head)->next) {
+		cur = *head;
+		*head = (*head)->next;
+		delete cur;
+	}
+	delete *head;
+
+}
+
 void ShowListOfPassengers(ListOfPassengers* head) {
 	ListOfPassengers* cur = head;
 	if (!(head)) {
@@ -112,6 +126,11 @@ void AddHash(ListOfPassengers* arr[], Passenger elem) {
 
 	AddListOfPassengers(&arr[HashFunc(elem.passport_id)], elem);
 	
+}
+void DeleteHash(ListOfPassengers* arr[], std::string passport_id) {
+
+	DeleteListOfPassengers(&arr[HashFunc(passport_id)], passport_id);
+
 }
 
 void FreeListOfPassengers(ListOfPassengers** head) {
