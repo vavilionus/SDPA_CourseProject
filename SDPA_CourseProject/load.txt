@@ -1,10 +1,10 @@
 *|0000-000002|PlaCe|12.12.1212|De BU|12.12.1212
 *|0000-000001|Place|12.12.1212|FIO|12.12.1212
 
-¹|AAA-001|Company|Depart|Arrival|11.11.2000|12:12|25|25
-¹|AAA-000|Company|Depart|Arrival|11.11.2000|12:12|25|25
-¹|AAA-002|Company|Depart|Arrival|11.11.2000|12:12|25|25
-¹|AAA-003|Company|Depart|Arrival|11.11.2000|12:12|25|25
+¹|AAA-001|Company|Depart|Amsterdam|11.11.2000|12:12|25|25
+¹|AAA-000|Company|Depart|Astana|11.11.2000|12:12|25|25
+¹|AAA-002|Company|Depart|Maramai|11.11.2000|12:12|25|25
+¹|AAA-003|Company|Depart|Tashkent|11.11.2000|12:12|25|25
 ¹|AAA-009|Company|Depart|Arrival|11.11.2000|12:12|25|25
 ¹|AAA-004|Company|Depart|Arrival|11.11.2000|12:12|25|25
 

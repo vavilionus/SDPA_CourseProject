@@ -303,7 +303,7 @@ void DeleteFlight(Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list) {
 void ShowFlight(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list) {
     int operathion_choice, passengers_size, ticket_counter, flag_is_unic;
     ticket_counter = 0;
-    std::string flight_id;
+    std::string flight_id, sample;
     std::string* passangers;
     ListOfPlaneTickets* ticket_cur = plane_tickets_list;
     Flight elem;
@@ -381,9 +381,114 @@ void ShowFlight(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTickets*
         delete[] passangers;
 
         break;
+
+    case 3:
+        std::cout << "Input a searching word: :" << std::endl << "\t";
+        sample = NameInput();
+        std::cout << "Result: \n" << std::endl;
+        std::cout << "/---------|--------------------------------|------------|-------\\" << std::endl;
+        std::cout << "|    ID   |             Arrival            |  Dep.Date  | DTime |" << std::endl;
+        std::cout << "|---------|--------------------------------|------------|-------|" << std::endl;
+        ReversalShowTree(flight_tree, sample);
+        break;
     }
     
 
+}
+
+bool IsWordContains(std::string str, std::string sample) {
+    int str_size = str.size();
+    int move = 0;
+    int sample_size = sample.size();
+    int shift_arr[59] = {0};
+    bool flag = 0;
+    int i_holder = 0;
+    if (str_size < 2 || (sample_size > str_size)) {
+        return 0;
+    }
+    for (int i = 0; i < sample_size-1; i++) {
+        if (int(sample[i]) == 32) {
+            shift_arr[0] = sample_size - 1 - i;
+        }
+        else {
+            shift_arr[int(sample[i]) - 64] = sample_size - 1 - i;
+        }
+    }
+    if (shift_arr[int(sample[sample_size - 1]) - 64] == 0) {
+        //не может заканчиватс€ на пробеле, поэтому проверки нет
+        shift_arr[int(sample[sample_size - 1]) - 64] = sample_size;
+    }
+    //демонстраци€работы шаблона
+    /*
+    for (int i = 0; i < sample_size; i++) {
+        if (int(sample[i]) == 32) {
+            std::cout << sample[i] << " - " << shift_arr[0] << std::endl;
+        }
+        else {
+            std::cout << sample[i] << " - " << shift_arr[int(sample[i]) - 64] << std::endl;
+        }
+    }
+    */
+    //обработка элем не вход€щих в шаблон
+    for (int i = 0; i < 59; i++) {
+        if (shift_arr[i] == 0) {
+            shift_arr[i] = sample_size;
+        }
+    }
+    
+
+    for (int i = sample_size - 1; i < str_size; ) {
+        flag = 0;
+        i_holder = i;
+        for (int j = sample_size - 1; j >= 0; j--) {
+            if (sample[j] == str[i]) {
+                i--;
+                //хот€ бы один символ совпал
+                flag = 1;
+                if (j == 0) {
+                    return 1;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        
+        //тут сдвиг
+        if (flag) {
+            //когда было хот€ бы одно совпадение, дл€ смещени€ берем последний символ образа
+            // пробел не обрабатываетс€, так как не может быть последним элементом образцаs
+            move = shift_arr[int(sample[sample_size-1]) - 64];
+        }
+        else {
+            //если не было ни одного совпадени€, то берем последний символ сравнени€ str
+            if (int(str[i_holder] == 32)) {
+                move = shift_arr[0];
+            }
+            else {
+                move = shift_arr[int(str[i_holder]) - 64];
+            }
+        }
+        i = i_holder + move;
+    }
+
+    return 0;
+}
+
+void ReversalShowTree(Tree* p, std::string sample) {
+    if (!p) return;
+
+    ReversalShowTree(p->left, sample);
+    ReversalShowTree(p->right, sample);
+    if (IsWordContains(p->value.arrival_name, sample)) {
+        std::cout << "| " << std::setw(7) << p->value.flight_id << " | "
+            << std::setw(30) << p->value.arrival_name << " | "
+            << std::setw(10) << p->value.date_of_departure << " | "
+            << std::setw(5) << p->value.time_of_departure << " | "
+            << std::endl;
+        std::cout << "|---------|--------------------------------|------------|-------|" << std::endl;
+    }
+    
 }
 
 //8. Clear ALL Flights

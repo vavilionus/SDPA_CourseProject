@@ -35,6 +35,8 @@ void DeleteFlight(Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list);
 
 //7  Show Flight
 void ShowFlight(ListOfPassengers* arr[], Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list);
+bool IsWordContains(std::string str, std::string sample);
+void ReversalShowTree(Tree* p, std::string sample);
 
 //8. Clear ALL Flights
 void ClearAllFlightData(Tree*& flight_tree, ListOfPlaneTickets*& plane_tickets_list);
