@@ -31,12 +31,5 @@ void ConvertIn(ListOfPlaneTickets*& root);
 void ConvertOut(ListOfPlaneTickets*& root);
 void quickSort(ListOfPlaneTickets*& root);
 void ListQuickSort(ListOfPlaneTickets*& root);
-//quick sort part
-/*
-struct ListOfPlaneTickets* getTail(struct ListOfPlaneTickets* cur);
-struct ListOfPlaneTickets* partition(struct ListOfPlaneTickets* head, struct ListOfPlaneTickets* end, struct ListOfPlaneTickets** newHead, struct ListOfPlaneTickets** newEnd);
-struct ListOfPlaneTickets* quickSortRecur(struct ListOfPlaneTickets* head, struct ListOfPlaneTickets* end);
-void quickSort(struct ListOfPlaneTickets** headRef);
-*/
 
 #endif 

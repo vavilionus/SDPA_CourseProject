@@ -15,6 +15,7 @@
 //1
 void CreatePassenger(ListOfPassengers* arr[]) {
     Passenger elem;
+    bool flag = 0;
     std::string passport_id = "NNNN-NNNNNN";
     std::cout << "Input passport ID (NNNN-NNNNNN):" << std::endl << "\t";
     passport_id = PassportIdInput();
@@ -31,6 +32,46 @@ void CreatePassenger(ListOfPassengers* arr[]) {
     elem.date_of_issue = DateInput();
     std::cout << "Input date of birth (NN.NN.NNNN):" << std::endl << "\t";
     elem.date_of_birth = DateInput();
+    
+    //day = std::stoi(a.substr(0, 2));
+    //month = std::stoi(a.substr(3, 2));
+    //year = std::stoi(a.substr(6, 4));
+    //допиши и отправь рогачеву
+    
+    if ((elem.date_of_birth).substr(6, 4) > (elem.date_of_issue).substr(6, 4)) {
+        flag = 1;
+    }
+    else if (((elem.date_of_birth).substr(6, 4) == (elem.date_of_issue).substr(6, 4)) && ((elem.date_of_birth).substr(3, 2) > (elem.date_of_issue).substr(3, 2))) {
+        flag = 1;
+    }
+    else if (((elem.date_of_birth).substr(6, 4) == (elem.date_of_issue).substr(6, 4)) && ((elem.date_of_birth).substr(3, 2) == (elem.date_of_issue).substr(3, 2)) && ((elem.date_of_birth).substr(0, 2) > (elem.date_of_issue).substr(0, 2))) {
+        flag = 1;
+    }
+    else {
+        flag = 0;
+    }
+    while (flag) {
+        std::cout << "Date of issue can Not be earlier than date of birth. Please Input new data." << std::endl << std::endl;
+
+        std::cout << "Input date of issue (NN.NN.NNNN):" << std::endl << "\t";
+        elem.date_of_issue = DateInput();
+        std::cout << "Input date of birth (NN.NN.NNNN):" << std::endl << "\t";
+        elem.date_of_birth = DateInput();
+        if ((elem.date_of_birth).substr(6, 4) > (elem.date_of_issue).substr(6, 4)) {
+            flag = 1;
+        }
+        else if (((elem.date_of_birth).substr(6, 4) == (elem.date_of_issue).substr(6, 4)) && ((elem.date_of_birth).substr(3, 2) > (elem.date_of_issue).substr(3, 2))) {
+            flag = 1;
+        }
+        else if (((elem.date_of_birth).substr(6, 4) == (elem.date_of_issue).substr(6, 4)) && ((elem.date_of_birth).substr(3, 2) == (elem.date_of_issue).substr(3, 2)) && ((elem.date_of_birth).substr(0, 2) > (elem.date_of_issue).substr(0, 2))) {
+            flag = 1;
+        }
+        else {
+            flag = 0;
+        }
+
+        
+    }
     AddHash(arr, elem);
 }
 
@@ -778,6 +819,7 @@ std::string FlightIdInput() {
 std::string NameInput() {
     std::string a;
     int size;
+    int flag = 0;
     std::cin.clear();
     std::cin.ignore(std::cin.rdbuf()->in_avail());
     getline(std::cin, a, '\n');
@@ -799,8 +841,16 @@ std::string NameInput() {
             size--;
         }
     }
+    size = a.size();
+    for (int i = 0; i < size; i++) {
+        if (((int(a[i]) < 65 || int(a[i]) > 122)) && (a[i] != ' ')) {
+            flag = 1;
+        }
+        
+    }
 
-    while (std::cin.fail() || a.size() < 2 || a.size() > 30 || (a.find_first_of("0123456789,!@#$%^&*()_+-=./|{}[]") <= 30)) {
+    while (std::cin.fail() || a.size() < 2 || a.size() > 30 || (a.find_first_of("0123456789,!@#$%^&*()_+-=./\\^_'|{}[]") <= 30) || flag) {
+        flag = 0;
         std::cin.clear();
         std::cin.ignore(std::cin.rdbuf()->in_avail());
         std::cout << "\nIncorrect data!\nPlease input a new one.(2 <= length <= 30, and no numbers or spec symbols)\n\nIN: ";
@@ -821,6 +871,12 @@ std::string NameInput() {
                 (a).erase(--i, 1);
 
                 size--;
+            }
+        }
+        size = a.size();
+        for (int i = 0; i < size; i++) {
+            if ((int(a[i]) < 65 || int(a[i]) > 122)) {
+                flag = 1;
             }
         }
     }
@@ -873,7 +929,7 @@ std::string DateInput() {
         day = std::stoi( a.substr(0, 2));
         month = std::stoi(a.substr(3, 2));
         year = std::stoi(a.substr(6, 4));
-        std::cout << HowManyDays(month, year) << std::endl;
+        //std::cout << HowManyDays(month, year) << std::endl;
         if (month > 12 || day > HowManyDays(month, year)) {
             flag_mistake = 1;
         }
@@ -883,6 +939,7 @@ std::string DateInput() {
     else {
         flag_mistake = 1;
     }
+
 
     while (std::cin.fail() || flag_mistake) {
         flag_mistake = 0;

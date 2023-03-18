@@ -83,7 +83,7 @@ void ShowListOfPassengers(ListOfPassengers* head) {
 		//std::cout << "|---------------|--------------------------------|--------------------------------|---------------|---------------|" << std::endl;
 		while (cur)
 		{
-			std::cout << "| " << std::setw(13) << cur->value.passport_id << " | " << std::setw(30) << cur->value.full_name << " | " << std::setw(30) << cur->value.place << " | " << std::setw(13) << cur->value.date_of_issue << " | " << std::setw(13) << cur->value.date_of_issue << " | " << std::endl;
+			std::cout << "| " << std::setw(13) << cur->value.passport_id << " | " << std::setw(30) << cur->value.full_name << " | " << std::setw(30) << cur->value.place << " | " << std::setw(13) << cur->value.date_of_issue << " | " << std::setw(13) << cur->value.date_of_birth << " | " << std::endl;
 			std::cout << "|---------------|--------------------------------|--------------------------------|---------------|---------------|" << std::endl;
 			cur = cur->next;
 		}
